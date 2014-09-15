@@ -27,7 +27,7 @@ public class Dcompras extends coneccionBD {
         super();
     }
 
-    public Hashtable TraerTodasCompras() throws Exception {     
+    public Hashtable TraerTodasCabacerasCompras() throws Exception {     
         
 //      Esta consulta esta mal. Deberia ser una sola consulta asi 
 //      "SELECT * FROM compras c inner join prodxcomp pc where c.idCompras=pc.idCompra" 
@@ -47,20 +47,32 @@ public class Dcompras extends coneccionBD {
                 Compras aux = new Compras(usr, rows.getDate("fecha"));
                 aux.setId(rows.getInt("idCompras"));
 
-                String sqlProd = "SELECT * FROM prodxcomp where idCompra =" + aux.getId() + ";";
-                PreparedStatement psProd = Sentencia(sqlProd);
-                ResultSet rowsProd = consulta(psProd);
-
-                while (rowsProd.next()) {
-                    //int IdLinea, String Nombre, int Cantidad, float CostotUnit
-                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idProd"), rows.getString("nombre"), rows.getInt("cantidad"), rows.getFloat("precioUnit"));
-                    aux.agregarprod(pro);
-                }
                 lista.put(aux.getId(), aux);
             }
             return lista;
         } catch (SQLException ex) {
-            throw new SQLException("Error en traer todas las Compras" + ex.getMessage());
+            throw new SQLException("Error en traer todas las cabeceras de Compras " + ex.getMessage());
+        } finally {
+            super.desconectar();
+        }
+    }
+    
+    public Hashtable TraerLineasComprasPorIdCabecera(int idCabecera) throws Exception
+    {
+        try{
+            Hashtable aux = new Hashtable();
+                String sqlProd = "SELECT * FROM prodxcomp where idCompra =" + idCabecera + ";";
+                PreparedStatement psProd = Sentencia(sqlProd);
+                ResultSet rows = consulta(psProd);
+
+                while (rows.next()) {
+                    //int IdLinea, String Nombre, int Cantidad, float CostotUnit
+                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idProd"), rows.getString("nombre"), rows.getInt("cantidad"), rows.getFloat("precioUnit"));
+                    aux.put(pro.getIdLinea(), pro);
+                }
+                return aux;
+        } catch (SQLException ex) {
+            throw new SQLException("Error en traer todas las lineas de compras por cabecera de Compra " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -93,7 +105,7 @@ public class Dcompras extends coneccionBD {
             }
             return lista;
         } catch (SQLException ex) {
-            throw new SQLException("Error en traer todas las Compras por usuario" + ex.getMessage());
+            throw new SQLException("Error en traer todas las Compras por usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -126,7 +138,7 @@ public class Dcompras extends coneccionBD {
             }
             return lista;
         } catch (SQLException ex) {
-            throw new SQLException("Error en traer todas las Compras por usuario por id" + ex.getMessage());
+            throw new SQLException("Error en traer todas las Compras por usuario por id " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -164,7 +176,7 @@ public class Dcompras extends coneccionBD {
             PreparedStatement psProd = Sentencia(sql);
             consulta(psProd);
         } catch (SQLException ex) {
-            throw new SQLException("Error en crear la Compras" + ex.getMessage());
+            throw new SQLException("Error en crear la Compras " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -182,7 +194,7 @@ public class Dcompras extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             consulta(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error en eliminar la compra" + ex.getMessage());
+            throw new SQLException("Error en eliminar la compra " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -200,7 +212,7 @@ public class Dcompras extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             consulta(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error en eliminar la compra por id" + ex.getMessage());
+            throw new SQLException("Error en eliminar la compra por id " + ex.getMessage());
         } finally {
             super.desconectar();
         }

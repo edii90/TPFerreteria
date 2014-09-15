@@ -94,7 +94,6 @@ public class HistorialCompra extends HttpServlet {
             out.close();
         }
     }
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
