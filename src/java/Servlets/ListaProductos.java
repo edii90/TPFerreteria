@@ -112,14 +112,14 @@ public class ListaProductos extends HttpServlet {
                 int cantProd = Integer.parseInt(request.getParameter("cantidad"));
                 Productos Prod = new Productos();
                 Prod = (Productos) ListaProductos.get(idProd);
-                LineaDeCompra LineaCompra = new LineaDeCompra(Prod.getId(), Prod.getNombre(), cantProd, Prod.getPrecio());
+                LineaDeCompra LineaCompra = new LineaDeCompra(Prod.getId(),Prod.getNombre(),Prod.getPrecio(),cantProd);
                 if (ListaCarrito.get(Prod.getId()) != null) {
                     LineaDeCompra aux = new LineaDeCompra();
                     aux = (LineaDeCompra) ListaCarrito.get(Prod.getId());
                     LineaCompra.setCantidad(aux.getCantidad() + LineaCompra.getCantidad());
                 }
 
-                ListaCarrito.put(LineaCompra.getIdLinea(), LineaCompra);
+                ListaCarrito.put(LineaCompra.getId(), LineaCompra);
 
                 Prod.setStock(Prod.getStock() - cantProd);
                 ListaProductos.put(Prod.getId(), Prod);
