@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Modelo.Compras;
 import Modelo.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,8 +49,8 @@ public class ConfirmarCompra extends HttpServlet {
                 if (session.getAttribute("Mensaje") != null) {
                     out.println(session.getAttribute("Mensaje"));
                 } else {
-
-                    out.println("Usuario: " + User.getApellido() + ", " + User.getNombre() + "\n");
+                    /*Compras nuevaCompra = new Compras
+                    out.println("Usuario: " + User.getApellido() + ", " + User.getNombre() + "\n");*/
                     ListadoCompra = (Hashtable) session.getAttribute("Carrito");
 
                 }

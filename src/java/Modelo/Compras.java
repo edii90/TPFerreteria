@@ -61,12 +61,20 @@ public class Compras {
         this.lista = lista;
     }
     
-    public Compras(Usuarios user, Date fech)   {
+    public Compras(Usuarios user, Date fech){
         usr = user;
         fecha = fech;
-    }public Compras(int idCompra,Usuarios user, Date fech)   {
+    }
+    public Compras(int idCompra,Usuarios user, Date fech){
         id = idCompra;
         usr = user;
         fecha = fech;
     }
+    public Compras(int idCompra,Usuarios User, Date Fecha, Hashtable Lista){
+        id = idCompra;
+        usr = User;
+        fecha = Fecha;
+        lista = Lista;
+    }
+    
 }
