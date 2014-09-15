@@ -113,18 +113,20 @@ public class ListaProductos extends HttpServlet {
                 Productos Prod = new Productos();
                 Prod = (Productos) ListaProductos.get(idProd);
                 LineaDeCompra LineaCompra = new LineaDeCompra(Prod.getId(),Prod.getNombre(),Prod.getPrecio(),cantProd);
-                if (ListaCarrito.get(Prod.getId()) != null) {
-                    LineaDeCompra aux = new LineaDeCompra();
-                    aux = (LineaDeCompra) ListaCarrito.get(Prod.getId());
-                    LineaCompra.setCantidad(aux.getCantidad() + LineaCompra.getCantidad());
+                if(Prod.getStock() >= LineaCompra.getCantidad()){
+                    if (ListaCarrito.get(Prod.getId()) != null) {
+                        LineaDeCompra aux = new LineaDeCompra();
+                        aux = (LineaDeCompra) ListaCarrito.get(Prod.getId());
+                        LineaCompra.setCantidad(aux.getCantidad() + LineaCompra.getCantidad());
+                    }
+
+                    ListaCarrito.put(LineaCompra.getId(), LineaCompra);
+
+                    Prod.setStock(Prod.getStock() - cantProd);
+                    ListaProductos.put(Prod.getId(), Prod);
+
+                    session.setAttribute("Carrito", ListaCarrito);
                 }
-
-                ListaCarrito.put(LineaCompra.getId(), LineaCompra);
-
-                Prod.setStock(Prod.getStock() - cantProd);
-                ListaProductos.put(Prod.getId(), Prod);
-
-                session.setAttribute("Carrito", ListaCarrito);
             }
 
             processRequest(request, response);

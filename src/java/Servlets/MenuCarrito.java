@@ -71,7 +71,7 @@ public class MenuCarrito extends HttpServlet {
             out.println(
                     "</table>"
                     + "<form action='ConfirmarCompra' method='post'>"       
-                        + "<button class='btnCarrito'>asd</button>"
+                        + "<button class='btnCarrito'> COMPRAR </button>"
                     + "</form>"
                     + "</div>\n"
                     + "</div>\n");

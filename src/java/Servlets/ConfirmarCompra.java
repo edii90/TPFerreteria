@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import Modelo.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Hashtable;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,20 +38,25 @@ public class ConfirmarCompra extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
+        Usuarios User;
+        Hashtable ListadoCompra = new Hashtable();
         try {
-            if(session.getAttribute("User") != null){
+            if (session.getAttribute("User") != null) {
                 RequestDispatcher mwc = request.getRequestDispatcher("MarcoWeb");
                 mwc.include(request, response);
-
-                if(session.getAttribute("Mensaje") != null){
+                User = (Usuarios) session.getAttribute("User");
+                if (session.getAttribute("Mensaje") != null) {
                     out.println(session.getAttribute("Mensaje"));
-                }else{
-                    
+                } else {
+
+                    out.println("Usuario: " + User.getApellido() + ", " + User.getNombre() + "\n");
+                    ListadoCompra = (Hashtable) session.getAttribute("Carrito");
+
                 }
 
                 RequestDispatcher mwp = request.getRequestDispatcher("MarcoWebPie");
                 mwp.include(request, response);
-            }else{
+            } else {
                 session.setAttribute("Mensaje", "Usted no esta logeado.");
                 response.sendRedirect("Index");
             }

@@ -312,6 +312,16 @@ form{
     margin-top: 1%;
 }
 
+.btnCarrito{
+    
+    background-color: black;
+    color: white;
+    float: right;
+    border-radius: 5px;
+    border-color: gray;
+    margin-bottom: 0px;
+}
+
 /**********************************************************************************/
 /***********************************Menu*******************************************/
 .opcionMenu{
