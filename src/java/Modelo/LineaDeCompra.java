@@ -3,6 +3,7 @@ package Modelo;
 
 public class LineaDeCompra extends Productos{
 
+    private int idLinea;
     private float costoUnit;
     private int cantidad;
     
@@ -12,6 +13,13 @@ public class LineaDeCompra extends Productos{
     public LineaDeCompra(int id,String nombre, float CostoUnit, int Cantidad){
         
         super(id, nombre);
+        costoUnit = CostoUnit;
+        cantidad = Cantidad;
+    }
+    public LineaDeCompra(int idLin,int idProd,String nombre, float CostoUnit, int Cantidad){
+        
+        super(idProd, nombre);
+        idLinea = idLin;
         costoUnit = CostoUnit;
         cantidad = Cantidad;
     }
@@ -30,6 +38,12 @@ public class LineaDeCompra extends Productos{
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+    public int getIdLinea() {
+        return idLinea;
+    }
+    public void setIdLinea(int idLinea) {
+        this.idLinea = idLinea;
     }
     
     

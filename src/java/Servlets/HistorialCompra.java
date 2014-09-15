@@ -54,7 +54,7 @@ public class HistorialCompra extends HttpServlet {
             Hashtable ListaCompras;
             if (session.getAttribute("ListadoUsuarios") == null) {
                 Dcompras dcom = new Dcompras();
-                ListaCompras = dcom.TraerTodasCompras();
+                ListaCompras = dcom.TraerTodasCabacerasCompras();
                 session.setAttribute("ListadoCompras", ListaCompras);
             } else {
                 ListaCompras = (Hashtable) session.getAttribute("ListadoCompras");

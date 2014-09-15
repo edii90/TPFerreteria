@@ -61,13 +61,13 @@ public class Dcompras extends coneccionBD {
     {
         try{
             Hashtable aux = new Hashtable();
-                String sqlProd = "SELECT * FROM prodxcomp where idCompra =" + idCabecera + ";";
+                String sqlProd = "SELECT idLinea,idProd,nombre,precioUnit,cantidad FROM prodxcomp pc inner join productos p on p.idProductos=pc.idProd where idCompra =" + idCabecera + ";";
                 PreparedStatement psProd = Sentencia(sqlProd);
                 ResultSet rows = consulta(psProd);
 
                 while (rows.next()) {
-                    //int IdLinea, String Nombre, int Cantidad, float CostotUnit
-                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idProd"), rows.getString("nombre"), rows.getInt("cantidad"), rows.getFloat("precioUnit"));
+                    //int idLin,int idProd,String nombre, float CostoUnit, int Cantidad
+                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idLinea"), rows.getInt("idProd"), rows.getString("nombre"), rows.getFloat("precioUnit"),rows.getInt("cantidad"));
                     aux.put(pro.getIdLinea(), pro);
                 }
                 return aux;
@@ -82,28 +82,18 @@ public class Dcompras extends coneccionBD {
         try {
             super.conectar();
             Dusuarios dusr = new Dusuarios();
-            Hashtable lista = new Hashtable();
+            Hashtable aux = new Hashtable();
 
             String sql = "SELECT * FROM Compras where idUsuario = '" + user.getId() + ";";
             PreparedStatement ps = Sentencia(sql);
             ResultSet rows = consulta(ps);
 
             while (rows.next()) {
-                Usuarios usr = dusr.traerXid(rows.getInt("idUsuario"));
-                Compras aux = new Compras(usr, rows.getDate("fecha"));
-                aux.setId(rows.getInt("idCompras"));
-
-                String sqlProd = "SELECT * FROM SELECT * FROM prodxcomp where idCompra =" + aux.getId() + ";";
-                PreparedStatement psProd = Sentencia(sqlProd);
-                ResultSet rowsProd = consulta(psProd);
-
-                while (rowsProd.next()) {
-                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idProd"), rows.getString("nombre"), rows.getInt("cantidad"), rows.getFloat("precioUnit"));
-                    aux.agregarprod(pro);
+                    //int idLin,int idProd,String nombre, float CostoUnit, int Cantidad
+                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idLinea"), rows.getInt("idProd"), rows.getString("nombre"), rows.getFloat("precioUnit"),rows.getInt("cantidad"));
+                    aux.put(pro.getIdLinea(), pro);
                 }
-                lista.put(aux.getId(), aux);
-            }
-            return lista;
+            return aux;
         } catch (SQLException ex) {
             throw new SQLException("Error en traer todas las Compras por usuario " + ex.getMessage());
         } finally {
@@ -122,20 +112,10 @@ public class Dcompras extends coneccionBD {
             ResultSet rows = consulta(ps);
 
             while (rows.next()) {
-                Usuarios usr = dusr.traerXid(rows.getInt("idUsuario"));
-                Compras aux = new Compras(usr, rows.getDate("fecha"));
-                aux.setId(rows.getInt("idCompras"));
-
-                String sqlProd = "SELECT * FROM SELECT * FROM prodxcomp where idCompra =" + aux.getId() + ";";
-                PreparedStatement psProd = Sentencia(sqlProd);
-                ResultSet rowsProd = consulta(psProd);
-
-                while (rowsProd.next()) {
-                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idProd"), rows.getString("nombre"), rows.getInt("cantidad"), rows.getFloat("precioUnit"));
-                    aux.agregarprod(pro);
+                    //int idLin,int idProd,String nombre, float CostoUnit, int Cantidad
+                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idLinea"), rows.getInt("idProd"), rows.getString("nombre"), rows.getFloat("precioUnit"),rows.getInt("cantidad"));
+                    lista.put(pro.getIdLinea(), pro);
                 }
-                lista.put(aux.getId(), aux);
-            }
             return lista;
         } catch (SQLException ex) {
             throw new SQLException("Error en traer todas las Compras por usuario por id " + ex.getMessage());
