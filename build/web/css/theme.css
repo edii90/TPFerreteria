@@ -1,15 +1,15 @@
 body{
 
-	margin: 0;
+    margin: 0;
 }
 
 form{
 
-	margin: 0;
+    margin: 0;
 }
 
 .InputId{
-    
+
     display: none;
 }
 
@@ -17,8 +17,8 @@ form{
 
 .DivMain{
 
-	background-color: #C4C4C4;
-	width:  100%;
+    background-color: #C4C4C4;
+    width:  100%;
 }
 
 /**********************************************************************************/
@@ -26,134 +26,134 @@ form{
 
 .DivCabecera{
 
-	--opacity: 0.05;
-	position:fixed;
-	width: 100%;
-	height: 9%;
-	background-color: #327CFF;
-	box-shadow: 0px 0px 25px  #4A4A4A;
-	transition: opacity 1.5s;
+    --opacity: 0.05;
+    position:fixed;
+    width: 100%;
+    height: 9%;
+    background-color: #327CFF;
+    box-shadow: 0px 0px 25px  #4A4A4A;
+    transition: opacity 1.5s;
 }
 
 .DivCabecera:hover{
 
-	opacity: 1;
+    opacity: 1;
 }
 
 .DivLogo{
 
-        display: none;
+    display: none;
 }
 
 @media (min-width: 768px){
-    
+
     .DivLogo{
 
-	float: left;
-	width: 30%;
+        float: left;
+        width: 30%;
         display: block;
     }
 }
 
 .ImgLogo{
 
-	margin-left: 10%;
-	height: 100%;
-	width: 30%;
+    margin-left: 10%;
+    height: 100%;
+    width: 30%;
 }
 
 .DivBuscador{
 
-	float: left;
-	width: 50%;
-	margin-top: 1%;
- }
+    float: left;
+    width: 50%;
+    margin-top: 1%;
+}
 
 .Buscador{
 
-	float: left;
-	width:  65%;
-	height: 60%;
-	border: 0px;
-	border-bottom-left-radius: 7px;
-	border-top-left-radius: 7px;
-	outline: none;
+    float: left;
+    width:  65%;
+    height: 60%;
+    border: 0px;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
+    outline: none;
 }
 
 .BotonBuscador{
 
-	float:  left;
-	width:   8%;
-	height:  60%;
-	border:  0px;
-	border-bottom-right-radius: 7px;
-	border-top-right-radius: 7px;
-	background-color: white;
-	outline: none;
+    float:  left;
+    width:   8%;
+    height:  60%;
+    border:  0px;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+    background-color: white;
+    outline: none;
 }
 
 .ImgButtonBuscador{
 
-	width: 90%;
-	height: 90%;
+    width: 90%;
+    height: 90%;
 }
 
 .DivUsuario{
 
 
-	margin-top: 0.5%;
-	margin-left: 0%;
-	float: right;
-	width: 15%;
-	height: 60%;
+    margin-top: 0.5%;
+    margin-left: 0%;
+    float: right;
+    width: 15%;
+    height: 60%;
 
 }
 
 .InLog{
-        
-	width: 70%;
-	height: 100%;
-	text-align: left;
-	float: left;
+
+    width: 70%;
+    height: 100%;
+    text-align: left;
+    float: left;
 }
 
 
 .InLogOculta{
 
-	width: 70%;
-	height: 100%;
-	text-align: left;
-	float: left;
-        display:none;
+    width: 70%;
+    height: 100%;
+    text-align: left;
+    float: left;
+    display:none;
 }
 
 
 .InUser{
-	
-	color: gray;
-	height: 50%;
-	text-align: center;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	border-top-left-radius: 5px;
-	outline: none;
+
+    color: gray;
+    height: 50%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border-top-left-radius: 5px;
+    outline: none;
 }
 
 .InPass{
 
-	color: gray;
-	height: 50%;
-	text-align: center;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	border-bottom-left-radius: 5px;
-	outline: none;
+    color: gray;
+    height: 50%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border-bottom-left-radius: 5px;
+    outline: none;
 }
 
 .DivTextLog{
-    
+
     height: 50%;
     text-align: center;
     padding: 0;
@@ -170,26 +170,26 @@ form{
 
 .ButtonLog{
 
-	box-shadow: 4px 0px 10px gray;
-	width: 30%;
-	height: 100%;
-	border-bottom-right-radius: 6px;
-	border-top-right-radius: 6px;
-	border: 0px;
-	float: left;
-	outline: none;
+    box-shadow: 4px 0px 10px gray;
+    width: 30%;
+    height: 100%;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+    border: 0px;
+    float: left;
+    outline: none;
 }
 
 .ButtonLog:active{
 
-	box-shadow: none;
+    box-shadow: none;
 }
 
 .TxtErrorVisible{
 
-	color: black;
-	width: 100%;
-        display: block;
+    color: black;
+    width: 100%;
+    display: block;
 }
 
 
@@ -198,120 +198,144 @@ form{
 /********************************Barra Inferior/***********************************/
 .DivPiepagina{
 
-	width: 100%;
-	height:  0.75%;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	background-color: #6CFFEC;
-	box-shadow: 0px 0px 25px  #4A4A4A;
-	transition: height 1s;
+    width: 100%;
+    height:  0.75%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #6CFFEC;
+    box-shadow: 0px 0px 25px  #4A4A4A;
+    transition: height 1s;
 }
 
 .SpanPersonalizado{
 
-	opacity: 0;
-	transition: opacity 1.5s;
+    opacity: 0;
+    transition: opacity 1.5s;
 }
 
 
 .DivPiepagina:hover{
 
-	height: 3%;
+    height: 3%;
 }
 
 .DivPiepagina:hover .SpanPersonalizado{
 
-	opacity: 1;
+    opacity: 1;
 }
 
 /**********************************************************************************/
 /*******************************Contenido PRincipal********************************/
 .ContenidoMain{
 
-	margin-top: 5%;
-	width: 100%;
-	float: left;
+    margin-top: 5%;
+    width: 100%;
+    float: left;
 }
 
 .DivContenido{
 
-	background-color: white;
+    background-color: white;
 }
 
 /**********************************************************************************/
 /***********************************Menu Carrito***********************************/
 
 .DivCarrito{
-	position:       fixed;
-	background-color: blue;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-        width:            15%;
-        height:   	       5%;
-        right:         	  0px;
-        bottom:        	  0px;
-	transition: height 1s;
+    position:       fixed;
+    background-color: blue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width:            15%;
+    height:   	       5%;
+    right:         	  0px;
+    bottom:        	  0px;
+    transition: height 1s;
 
 }
 
 .DivCarritoAbierto{
 
-	position:       fixed;
-	background-color: blue;
-	border-top-left-radius: 10px;
-        border-top-right-radius: 0px;
-        width:            15%;
-        height:   	      91%;
-        right:         	  0px;
-        bottom:        	  0px;
-	transition: height 1s;
+    position:       fixed;
+    background-color: blue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0px;
+    width:            15%;
+    height:   	      91%;
+    right:         	  0px;
+    bottom:        	  0px;
+    transition: height 1s;
 }
 
 
 .DivBotonCarrito{
-	
-	position:       fixed;
-        width:            15%;
-        height:   	       5%;
-        right:         	  0px;
-        bottom:        	  0px;
-	transition: height 1s;
-	background: blue;
+
+    position:       fixed;
+    width:            15%;
+    height:   	       5%;
+    right:         	  0px;
+    bottom:        	  0px;
+    transition: height 1s;
+    background: blue;
 }
 
 .ImgBotonCarrito{
 
-	position: fixed;
-	width: 5%;
-	height: 5%;
-	right: 0px;
-	background-color: blue;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+    position: fixed;
+    width: 5%;
+    height: 5%;
+    right: 0px;
+    background-color: blue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .DivMenuCarrito{
-	
-	width: 100%;
-	float: left;
+
+    width: 100%;
+    float: left;
 }
 
 .TxtTotal{
 
-	float: right;
-	margin-top: 2%;
-	margin-right: 40%;
-	font-size: 20px;
-	color: white;
+    float: right;
+    margin-top: 2%;
+    margin-right: 40%;
+    font-size: 20px;
+    color: white;
 }
 
 .TableMenu{
-    
+
     color: white;
     width: 100%;
     margin-top: 1%;
 }
 
+/**********************************************************************************/
+/***********************************Menu*******************************************/
+.opcionMenu{
+    float: left;
+    height: 3%;
+    margin-top: 6%;
+    margin-left: 5%;
+    width: 100%;
+    font-size: 180%;
+    text-decoration: none;
+    color: black;
+}
+.contenedorCarrito
+{
+    float: left;
+    background-color: blue;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 10px;
+    width: 18%;
+    height: 91%;
+    right: 0px;
+    bottom: 0px;
+    transition: height 1s;
+}
 /**********************************************************************************/
 /***********************************Lista Producto*********************************/
 
@@ -322,24 +346,24 @@ form{
 }
 
 @media (min-width: 700px){
-    
+
     .DivProductos{
-    
+
         float:left;
         width: 45%;
     }
 }
 @media (min-width: 1300px){
-    
+
     .DivProductos{
-    
+
         float:left;
         width: 15%;
     }
 }
 
 .DivListProduct{
-    
+
     width: 90%;
     background-color: red;
 }
@@ -348,96 +372,134 @@ form{
 /**********************************************************************************/
 /***********************************ABM *******************************************/
 .DivCentrado
-	{
-		position: absolute;
-		top:50%;
-		left:50%;
-                font-size: 300%; 
-		margin-left:-20%;
-		border:1px solid #808080;
-		padding:5px;
-	}      
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    font-size: 300%; 
+    margin-left:-20%;
+    border:1px solid #808080;
+    padding:5px;
+}      
 .filaAbm
-        {
-                height:30px;
-        }
+{
+    height:30px;
+}
 .celdaCabecera 
-        {
-                background-color: #CCCCCC;
-                text-align:center;
-                vertical-align:middle;
-                float:left;
-                width:14.28%;
-                height:100%;
-                font-family: Arial, Helvetica, sans-serif;
-        }
+{
+    background-color: #CCCCCC;
+    text-align:center;
+    vertical-align:middle;
+    float:left;
+    width:14.28%;
+    height:100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
 .celdaUsuario 
-        {
-                text-align:center;
-                vertical-align:middle;
-                float:left;
-                width:14%;
-                height:100%;
-                font-family: Arial, Helvetica, sans-serif;
-                border-bottom:1px solid #808080;
-        }
+{
+    text-align:center;
+    vertical-align:middle;
+    float:left;
+    width:14%;
+    height:100%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-bottom:1px solid #808080;
+}
 .botonEditar
-        {
-                vertical-align:bottom;
-                height:80%;
-        }
+{
+    vertical-align:bottom;
+    height:80%;
+}
 .botonNuevo
-        {
-                float: right;
-                height:110%;
-                margin-top: 1%;
-                margin-right: 2%;
-        }
+{
+    float: right;
+    height:110%;
+    margin-top: 1%;
+    margin-right: 2%;
+}
 /*******************Editar Usuario ABM*****************/
- .contenedor
-        {
-                left:50%;
-                width:100%;
-                left: 50%;
-                float: left;
-        }
- .etiqueta
-        {
-                width: 40%;
-                font-family: Arial, Helvetica, sans-serif;
-                float:left;
-                text-align: right;
-                
-        }
- .campo
-        {
-                float:left;
-                text-align: center;
-                width: 50%;
-                margin-left: 5%;
-        }
+.contenedor
+{
+    left:50%;
+    width:100%;
+    left: 50%;
+    float: left;
+}
+.etiqueta
+{
+    width: 40%;
+    font-family: Arial, Helvetica, sans-serif;
+    float:left;
+    text-align: right;
+
+}
+.campo
+{
+    float:left;
+    text-align: center;
+    width: 50%;
+    margin-left: 5%;
+}
 .formABM
-        {
-                width: 50%;
-                margin-left: 25%;   
-        }
+{
+    width: 50%;
+    margin-left: 25%;   
+}
 .InputABM
-        {
-                width: 100%;
-                text-align: center;
-        }
+{
+    width: 100%;
+    text-align: center;
+}
 .DivBoton
-        {
-            width: 24%;
-            float: left;
-            margin-left: 8%;
-            margin-top: 10%;
-            height: 8%;
-        }
+{
+    width: 24%;
+    float: left;
+    margin-left: 8%;
+    margin-top: 10%;
+    height: 8%;
+}
 .botonABM
-        {
-            width: 100%;
-            height: 100%;
-            font-size: 150%;
-        }
+{
+    width: 100%;
+    height: 100%;
+    font-size: 150%;
+}
+/**********************************************************************************/
+/*******************************Historial Compra***********************************/
+.celdaCabeceraHistorial
+{
+    float:left;
+    width:20%;
+    font-size: 100%;
+
+}
+.celdaHistorial
+{
+    float:left;
+    width:20%;
+}
+.filaHistorial
+{
+    height: 5%;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid;
+}
+.filaHistorialCabecera
+{
+    height: 5%;
+    width: 100%;
+    text-align: center;
+    background-color: darkgrey;
+}
+.botonVerHistorial
+{
+    width:50%;
+    height:70%;
+}
+.tablaHistorial
+{
+    margin-left: 20%;
+    margin-right: 20%;
+}
 /**********************************************************************************/

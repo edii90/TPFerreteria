@@ -28,51 +28,48 @@ public class ListaProductos extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
         Hashtable ListadoMuestreo = new Hashtable();
-        
-        
+
         try {
-            if(session.getAttribute("User") != null){
+            if (session.getAttribute("User") != null) {
                 RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
                 mw.include(request, response);
+                if (session.getAttribute("Mensaje") != null) {
+                    out.println(session.getAttribute("Mensaje"));
+                    session.removeAttribute("Mensaje");
+                }
                 Dproductos Dpro = new Dproductos();
 
                 out.println("<div class='DivListProduct'>");
-                if(session.getAttribute("Mensaje") == null){
-                    if(session.getAttribute("Carrito") == null){
-                        ListadoMuestreo = Dpro.TraerProductos();
-                        session.setAttribute("ListaProductos", ListadoMuestreo);
-                    }else{
-                        ListadoMuestreo = (Hashtable)session.getAttribute("ListaProductos");
-                    }
-                    Enumeration e = ListadoMuestreo.elements();
-                    Productos aux;
-                    int formid = 1;
-                    while (e.hasMoreElements()) {
-                        aux = (Productos) e.nextElement();
-                        String FormName = "Producto" + formid;
+                if (session.getAttribute("Carrito") == null) {
+                    ListadoMuestreo = Dpro.TraerProductos();
+                    session.setAttribute("ListaProductos", ListadoMuestreo);
+                } else {
+                    ListadoMuestreo = (Hashtable) session.getAttribute("ListaProductos");
+                }
+                Enumeration e = ListadoMuestreo.elements();
+                Productos aux;
+                int formid = 1;
+                while (e.hasMoreElements()) {
+                    aux = (Productos) e.nextElement();
+                    String FormName = "Producto" + formid;
 
-                        out.println(
-                                "<form name='" + FormName + "' action='ListaProductos' method='post'>"
-                                + "<div class='DivProductos'>"
-                                + "<br><input type='text' name='id' class='InputId' value='" + aux.getId() + "'>"
-                                + "<br><label name='nombre'>" + aux.getNombre() + "</label>"
-                                + "<br><label name='precio'>" + aux.getPrecio() + "</label>"
-                                + "<br><label name='Stock'>" + aux.getStock() + "</label>"
-                                + "<input name='cantidad' type='number' value='0' min='0' max='" + aux.getStock() + "'>"
-                                + "<br><button>Agregar</button>"
-                                + "</div>"
-                                + "</form>");
-                        formid++;
-                    }
-                }else{
-                    out.println(session.getAttribute("Mensaje"));
-                    session.removeAttribute("Mensaje");
+                    out.println(
+                            "<form name='" + FormName + "' action='ListaProductos' method='post'>"
+                            + "<div class='DivProductos'>"
+                            + "<br><input type='text' name='id' class='InputId' value='" + aux.getId() + "'>"
+                            + "<br><label name='nombre'>" + aux.getNombre() + "</label>"
+                            + "<br><label name='precio'>" + aux.getPrecio() + "</label>"
+                            + "<br><label name='Stock'>" + aux.getStock() + "</label>"
+                            + "<input name='cantidad' type='number' value='0' min='0' max='" + aux.getStock() + "'>"
+                            + "<br><button>Agregar</button>"
+                            + "</div>"
+                            + "</form>");
+                    formid++;
                 }
                 out.println("</div>");
                 RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");
                 mwc.include(request, response);
-            }else{
-                
+            } else {
                 response.sendRedirect("Index");
             }
         } catch (Exception ex) {
@@ -80,7 +77,7 @@ public class ListaProductos extends HttpServlet {
         } finally {
             out.close();
         }
-        
+
     }
 
     @Override
@@ -110,30 +107,30 @@ public class ListaProductos extends HttpServlet {
                 if (session.getAttribute("Carrito") != null) {
                     ListaCarrito = (Hashtable) session.getAttribute("Carrito");
                 }
-                
+
                 int idProd = Integer.parseInt(request.getParameter("id"));
                 int cantProd = Integer.parseInt(request.getParameter("cantidad"));
                 Productos Prod = new Productos();
                 Prod = (Productos) ListaProductos.get(idProd);
                 LineaDeCompra LineaCompra = new LineaDeCompra(Prod.getId(), Prod.getNombre(), cantProd, Prod.getPrecio());
-                if(ListaCarrito.get(Prod.getId()) != null){
+                if (ListaCarrito.get(Prod.getId()) != null) {
                     LineaDeCompra aux = new LineaDeCompra();
-                    aux = (LineaDeCompra)ListaCarrito.get(Prod.getId());
-                    LineaCompra.setCantidad(aux.getCantidad()+LineaCompra.getCantidad());
+                    aux = (LineaDeCompra) ListaCarrito.get(Prod.getId());
+                    LineaCompra.setCantidad(aux.getCantidad() + LineaCompra.getCantidad());
                 }
-                
+
                 ListaCarrito.put(LineaCompra.getIdLinea(), LineaCompra);
-                
-                Prod.setStock(Prod.getStock()-cantProd);
+
+                Prod.setStock(Prod.getStock() - cantProd);
                 ListaProductos.put(Prod.getId(), Prod);
-                
+
                 session.setAttribute("Carrito", ListaCarrito);
             }
 
             processRequest(request, response);
 
         } catch (Exception ex) {
-            session.setAttribute("Mensaje", "Error in catch"+ex);
+            session.setAttribute("Mensaje", "Error in catch " + ex);
         }
     }
 

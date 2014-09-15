@@ -28,10 +28,14 @@ public class Menu extends HttpServlet {
                     out.println(session.getAttribute("Mensaje"));
                 }else{
                     Usuarios user = (Usuarios)session.getAttribute("User");
+                    out.println("<div class='contenedorCarrito'>");
                     if(user.getTipoUsr() == 1){
-                        out.println("<a href='ABMUsuarios'>ABM de Usuario</a>\n");
+                        out.println("<a href='ABMUsuarios' class='opcionMenu'>ABM de Usuario</a>");
                     }
-                    out.println("<a href='ListaProductos'>Listado de Productos</a>\n");
+                    out.println("<a href='ListaProductos' class='opcionMenu'>Listado de Productos</a>");
+                    out.println("<a href='HistoriaCompra' class='opcionMenu'>Historial de Compras</a>");
+                    
+                    out.println("</div>");
                 }
 
                 RequestDispatcher mwp = request.getRequestDispatcher("MarcoWebPie");
