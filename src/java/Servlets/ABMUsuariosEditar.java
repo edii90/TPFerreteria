@@ -39,16 +39,16 @@ public class ABMUsuariosEditar extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
-        Usuarios userLogeado = (Usuarios) session.getAttribute("User");
 
         try {
             RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
             mw.include(request, response);
 
-            if (userLogeado != null) {
-                if (userLogeado.getTipoUsr() == 1) {
+            if (session.getAttribute("User") != null) {
+                if (((Usuarios) session.getAttribute("User")).getTipoUsr() == 1) {
                     if (session.getAttribute("Mensaje") != null) {
                         out.println("<div class='txtmsgerror'>" + session.getAttribute("Mensaje") + "</div>");
+                        session.removeAttribute("Mensaje");
                     }
                     Usuarios user = (Usuarios) session.getAttribute("UsuarioModificar");
                     out.println("<form class='formABM' name='DatosUsuario' action='ABMUsuariosEditar' method='post'>"
@@ -80,9 +80,11 @@ public class ABMUsuariosEditar extends HttpServlet {
                             + "	<div class='etiqueta'><label name='tipo'>Tipo de Usuario: </label></div>"
                             + "	<div class='campo'><input class='InputABM' type='text' name ='TipoUsr' value='" + user.getTipoUsr() + "' /></div>"
                             + "</div>"
-                            + "	<div class='boton'><button name='Guardar' class='asd'>Guardar</button></div>"
-                            + "	<div class='boton'><button name='Eliminar' class='asd'>Eliminar</button></div>"
-                            + "	<div class='boton'><button name='Cancelar' class='asd'>Cancelar</button></div>"
+                            + "	<div class='DivBoton'><button name='Guardar' class='botonABM'>Guardar</button></div>");
+                    if (user.getId() != 0) {
+                        out.println("	<div class='DivBoton'><button name='Eliminar' class='botonABM'>Eliminar</button></div>");
+                    }
+                    out.println("	<div class='DivBoton'><button name='Cancelar' class='botonABM'>Cancelar</button></div>"
                             + "</form>");
                     RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");
                     mwc.include(request, response);
@@ -110,21 +112,41 @@ public class ABMUsuariosEditar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int id;
             HttpSession session = request.getSession(true);
+
+            int id;
+
             if (session.getAttribute("idUsuarioEditar") == null) {
-                id = Integer.parseInt(request.getParameter("id"));
-                session.setAttribute("idUsuarioEditar", id);
+                if (request.getParameter("id") != null) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                    session.setAttribute("idUsuarioEditar", id);
+                } else {
+                    id = 0;
+                }
             } else {
                 id = (Integer) session.getAttribute("idUsuarioEditar");
+
             }
-            Hashtable ListadoUsuarios = (Hashtable) session.getAttribute("ListadoUsuarios");
-            Usuarios user = (Usuarios) ListadoUsuarios.get(id);
-            session.setAttribute("UsuarioModificar", user);
+            if (id != 0) {
+                Hashtable ListadoUsuarios = (Hashtable) session.getAttribute("ListadoUsuarios");
+                Usuarios user = (Usuarios) ListadoUsuarios.get(id);
+                session.setAttribute("UsuarioModificar", user);
+            } else {
+                Usuarios user = new Usuarios("", "", 0, "", "", 2);
+                session.setAttribute("UsuarioModificar", user);
+            }
 
             if (request.getParameter("Eliminar") != null) {
+                Dusuarios duser = new Dusuarios();
+                duser.EliminarUsr(id);
 
+                session.removeAttribute("idUsuarioEditar");
+                session.removeAttribute("UsuarioModificar");
+                session.removeAttribute("ListadoUsuarios");
+
+                response.sendRedirect("ABMUsuarios");
             }
+
             if (request.getParameter("Guardar") != null) {
                 Dusuarios duser = new Dusuarios();
 
@@ -135,16 +157,23 @@ public class ABMUsuariosEditar extends HttpServlet {
                 int tipo = Integer.parseInt(request.getParameter("TipoUsr"));
                 int doc = Integer.parseInt(request.getParameter("DNI"));
 
-                Usuarios aux = new Usuarios(id, usr, pass, doc, nombre, apellido, tipo);
-                duser.ModificarUsr(aux);
+                if (id != 0) {
+                    Usuarios aux = new Usuarios(id, usr, pass, doc, nombre, apellido, tipo);
+                    duser.ModificarUsr(aux);
+                } else {
+                    duser.CrearUsr(usr, pass, doc, nombre, apellido);
+                }
 
                 session.removeAttribute("idUsuarioEditar");
-                session.removeAttribute("ListadoUsuarios");
                 session.removeAttribute("UsuarioModificar");
+                session.removeAttribute("ListadoUsuarios");
 
                 response.sendRedirect("ABMUsuarios");
             }
+
             if (request.getParameter("Cancelar") != null) {
+                session.removeAttribute("idUsuarioEditar");
+                session.removeAttribute("UsuarioModificar");
                 response.sendRedirect("ABMUsuarios");
             }
 
@@ -157,11 +186,6 @@ public class ABMUsuariosEditar extends HttpServlet {
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -426,11 +426,18 @@ form{
                 width: 100%;
                 text-align: center;
         }
-.boton
+.DivBoton
         {
-            width: 25%;
+            width: 24%;
             float: left;
             margin-left: 8%;
             margin-top: 10%;
+            height: 8%;
+        }
+.botonABM
+        {
+            width: 100%;
+            height: 100%;
+            font-size: 150%;
         }
 /**********************************************************************************/
