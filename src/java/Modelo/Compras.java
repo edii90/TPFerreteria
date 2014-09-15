@@ -70,8 +70,7 @@ public class Compras {
         usr = user;
         fecha = fech;
     }
-    public Compras(int idCompra,Usuarios User, Date Fecha, Hashtable Lista){
-        id = idCompra;
+    public Compras(Usuarios User, Date Fecha, Hashtable Lista){
         usr = User;
         fecha = Fecha;
         lista = Lista;
