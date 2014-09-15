@@ -17,6 +17,12 @@ public class Compras {
     private float total;
     private Hashtable lista;
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public Usuarios getUsr() {
         return usr;
     }
@@ -29,20 +35,7 @@ public class Compras {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    public void agregarprod(LineaDeCompra pro){
-            getLista().put(pro.getIdLinea(), pro);
-    }    
-    public void eliminarprod(LineaDeCompra pro)   {
-        getLista().remove(pro.getIdLinea());
-    }
-    
-    public Compras(Usuarios user, Date fech)   {
-        usr = user;
-        fecha = fech;
-    }
-    
-    public float getTotal()
-    {
+    public float getTotal()    {
         Enumeration e = getLista().elements();
         LineaDeCompra aux;
         while(e.hasMoreElements())
@@ -52,39 +45,28 @@ public class Compras {
         }
         return total;   
     }
-
-    /**
-     * @param total the total to set
-     */
     public void setTotal(float total) {
         this.total = total;
     }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
+    public void agregarprod(LineaDeCompra pro){
+            getLista().put(pro.getIdLinea(), pro);
+    }    
+    public void eliminarprod(LineaDeCompra pro)   {
+        getLista().remove(pro.getIdLinea());
     }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the lista
-     */
     public Hashtable getLista() {
         return lista;
     }
-
-    /**
-     * @param lista the lista to set
-     */
     public void setLista(Hashtable lista) {
         this.lista = lista;
+    }
+    
+    public Compras(Usuarios user, Date fech)   {
+        usr = user;
+        fecha = fech;
+    }public Compras(int idCompra,Usuarios user, Date fech)   {
+        id = idCompra;
+        usr = user;
+        fecha = fech;
     }
 }

@@ -44,8 +44,7 @@ public class Dcompras extends coneccionBD {
 
             while (rows.next()) {
                 Usuarios usr = dusr.traerXid(rows.getInt("idUsuario"));
-                Compras aux = new Compras(usr, rows.getDate("fecha"));
-                aux.setId(rows.getInt("idCompras"));
+                Compras aux = new Compras(rows.getInt("idCompras"),usr, rows.getDate("fecha"));
 
                 lista.put(aux.getId(), aux);
             }
