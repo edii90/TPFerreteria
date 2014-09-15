@@ -133,9 +133,8 @@ public class Dcompras extends coneccionBD {
             String sql = "delimiter // start transaction;";
 
             //Inserta la cabecera de la compra
-            sql += "INSERT INTO Compras (idUsuario,fecha,total) values('"
+            sql += "INSERT INTO Compras (idUsuario,total) values('"
                     + comp.getUsr().getId() + "','"
-                    + df.format(dateobj) + "','"
                     + comp.getTotal() + "'); //";
 
             //Recorre la lista de productos e Inserta la lista en la tabla relacinal productos X compra

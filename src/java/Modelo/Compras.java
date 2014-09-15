@@ -35,7 +35,7 @@ public class Compras {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    public float getTotal()    {
+    public float calcularTotal(){
         Enumeration e = getLista().elements();
         LineaDeCompra aux;
         while(e.hasMoreElements())
@@ -45,6 +45,10 @@ public class Compras {
         }
         return total;   
     }
+    public float getTotal(){
+        return total;   
+    }
+    
     public void setTotal(float total) {
         this.total = total;
     }
@@ -61,19 +65,14 @@ public class Compras {
         this.lista = lista;
     }
     
-    public Compras(Usuarios user, Date fech){
-        usr = user;
-        fecha = fech;
-    }
     public Compras(int idCompra,Usuarios user, Date fech){
         id = idCompra;
         usr = user;
         fecha = fech;
     }
-    public Compras(Usuarios User, Date Fecha, Hashtable Lista){
+    
+    public Compras(Usuarios User, Hashtable Lista){
         usr = User;
-        fecha = Fecha;
         lista = Lista;
     }
-    
 }

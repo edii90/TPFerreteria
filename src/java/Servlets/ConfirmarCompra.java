@@ -49,7 +49,7 @@ public class ConfirmarCompra extends HttpServlet {
                 if (session.getAttribute("Mensaje") != null) {
                     out.println(session.getAttribute("Mensaje"));
                 } else {
-                    //Compras nuevaCompra = new Compras(idCompra, User, null, ListadoCompra)
+                    //Compras nuevaCompra = new Compras(User,)
                     out.println("Usuario: " + User.getApellido() + ", " + User.getNombre() + "\n");
                     ListadoCompra = (Hashtable) session.getAttribute("Carrito");
 
