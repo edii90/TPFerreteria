@@ -23,24 +23,22 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
-        Usuarios user = (Usuarios) session.getAttribute("User");
-
         try {
             RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
             mw.include(request, response);
-
+            
+            Usuarios user = (Usuarios) session.getAttribute("User");
+            
             if (session.getAttribute("Mensaje") != null) {
-                    out.println(session.getAttribute("Mensaje"));
-                    session.removeAttribute("Mensaje");
-            }else{
-                if (user != null){
-                    out.println("Bienvenido " + user.getNombre());
-
-                    RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");
-                    mwc.include(request, response);
-                }
+                out.println(session.getAttribute("Mensaje"));
+                session.removeAttribute("Mensaje");
             }
-
+            if (user != null) {
+                out.println("Bienvenido " + user.getNombre());
+            }
+            else{
+                    out.println("<div class='DivCentrado'>Ferreteria \"Kwik E MART\"</div>");
+            }
             RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");
             mwc.include(request, response);
 
@@ -66,7 +64,7 @@ public class Index extends HttpServlet {
 
         try {
             if (session.getAttribute("Mensaje") == null) {
-            
+
                 if (session.getAttribute("User") != null) {
                     session.invalidate();
                 } else {

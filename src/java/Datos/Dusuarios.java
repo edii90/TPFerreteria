@@ -48,7 +48,7 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             ResultSet rows = consulta(ps);
             if (rows.next()) {
-                return usr = new Usuarios(usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
+                return usr = new Usuarios(rows.getInt("idUsr"),usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
             }
             return usr;
         } catch (SQLException ex) {
