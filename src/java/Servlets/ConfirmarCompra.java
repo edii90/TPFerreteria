@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Datos.Dcompras;
 import Modelo.Compras;
 import Modelo.LineaDeCompra;
 import Modelo.Usuarios;
@@ -49,34 +50,43 @@ public class ConfirmarCompra extends HttpServlet {
                 Hashtable ListadoCompra = (Hashtable) session.getAttribute("Carrito");
 
                 Compras nuevaCompra = new Compras(User, ListadoCompra);
-
+                session.setAttribute("nuevaCompra", nuevaCompra);
                 Enumeration e = ListadoCompra.elements();
                 e = ListadoCompra.elements();
                 LineaDeCompra aux;
 
-                out.println("Usuario: " + nuevaCompra.getUsr().getNombre() + ", " + nuevaCompra.getUsr().getApellido() + "\n"
-                        + "<div>");
+                out.println("<form name='Confirmar' action='ConfirmarCompra' method='post' ><div class='DivConfCompra'><table class='TablaDetalleCompra'>");
+                out.println("<tr>Usuario: " + nuevaCompra.getUsr().getNombre() + ", " + nuevaCompra.getUsr().getApellido() + "</tr>");
 
                 while (e.hasMoreElements()) {
                     aux = (LineaDeCompra) e.nextElement();
                     out.println(
-                            "<div>"
-                            + "<tr>"
+                            "<tr>"
                             + "<td>"
                             + " X" + aux.getCantidad()
                             + "</td>"
-                            + "<td style='text-center: right;'>"
+                            + "<td>"
                             + aux.getNombre()
                             + "</td>"
-                            + "<td style='text-align: right;'>"
+                            + "<td>"
                             + aux.getCostoUnit() + " $"
                             + "</td>"
-                            + "</tr>"
-                            + "</div>");
+                            + "</tr>");
                 }
-                out.println("</div>\n"
-                        + "\nTotal: " + nuevaCompra.calcularTotal()
-                        + "\n<button>Confirmar</button>");
+                out.println(
+                        "<tr>"
+                        + "<td>"
+                        + "<button>Confirmar</button>\n"
+                        + "</td>"
+                        + "<td>"
+                        + "</td>"
+                        + "<td>"
+                        + "Total: " + nuevaCompra.calcularTotal() + "\n"
+                        + "</td>"
+                        + "</tr>"
+                        + "</table>"
+                        + "</div>"
+                        + "</form>");
             }
 
             RequestDispatcher mwp = request.getRequestDispatcher("MarcoWebPie");
@@ -88,9 +98,8 @@ public class ConfirmarCompra extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
 
     @Override
@@ -101,16 +110,25 @@ public class ConfirmarCompra extends HttpServlet {
         try {
             if (session.getAttribute("User") != null) {
                 if (session.getAttribute("Carrito") != null) {
-                    processRequest(request, response);
+                    if (session.getAttribute("nuevaCompra") != null) {
+                        Compras NuevaCompra = (Compras)session.getAttribute("nuevaCompra");
+                        Dcompras daoCompras = new Dcompras();
+                        daoCompras.CrearCompra(NuevaCompra);
+                        response.sendRedirect("Index");
+                    }else{
+                        processRequest(request, response);
+                    }
                 } else {
                     session.setAttribute("Mensaje", "Carrito vacio");
+                    response.sendRedirect("Index");
                 }
             } else {
                 session.setAttribute("Mensaje", "Usted no esta logeado.");
                 response.sendRedirect("Index");
             }
         } catch (Exception ex) {
-            session.setAttribute("Mensaje", "Error in catch " + ex);
+            session.setAttribute("Mensaje", "Error en catch " + ex);
+            response.sendRedirect("Index");
         }
     }
 

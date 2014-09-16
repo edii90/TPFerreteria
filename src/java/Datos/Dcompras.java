@@ -102,13 +102,13 @@ public class Dcompras extends coneccionBD {
     }
 
     public void CrearCompra(Compras comp) throws Exception {
+        
+        String sql = "";
+        
         try {
             super.conectar();
-            //Comando para obtener la fecha y hora actual
-            DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-            Date dateobj = new Date();
-
-            String sql = "delimiter // start transaction;";
+            
+            sql = "delimiter // start transaction;";
 
             //Inserta la cabecera de la compra
             sql += "INSERT INTO Compras (idUsuario,total) values('"
@@ -122,8 +122,8 @@ public class Dcompras extends coneccionBD {
                 aux = (LineaDeCompra) e.nextElement();
 
                 sql += "INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values("
-                        + "(SELECT MAX(idCompras) FROM compras),'"
-                        + aux.getIdLinea() + "','"
+                        + "(SELECT MAX(idCompras)+1 FROM compras),'"
+                        + aux.getId()+ "','"
                         + aux.getCantidad() + "','"
                         + aux.getCostoUnit()
                         + "'); //";
@@ -132,7 +132,7 @@ public class Dcompras extends coneccionBD {
             PreparedStatement psProd = Sentencia(sql);
             consulta(psProd);
         } catch (SQLException ex) {
-            throw new SQLException("Error en crear la Compras " + ex.getMessage());
+            throw new SQLException("Error en crear la Compras " + ex.getMessage()+"       ***    "+sql);
         } finally {
             super.desconectar();
         }

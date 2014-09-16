@@ -96,11 +96,7 @@ public class HistorialCompraDetalle extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(HistorialCompraDetalle.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        doPost(request, response);
     }
 
     @Override

@@ -520,3 +520,34 @@ form{
     margin-right: 20%;
 }
 /**********************************************************************************/
+/*******************************Confirmar Compra**********************************/
+
+.DivConfCompra{
+    
+   float: left;
+    background-color: black;
+    position: fixed;
+    color: white;
+    text-align: center;
+    width: 60%;
+    left: 25%;
+    border-radius: 10px;
+}
+.TablaDetalleCompra{
+    
+    border: 0px;
+    width: 100%;
+    text-align: center;
+    border-spacing: 0px;
+}
+
+
+.TablaDetalleCompra tr:nth-child(odd) {
+   background-color: #DDD;
+   color:#777
+}
+
+.TablaDetalleCompra tr:nth-child(even) {
+   background-color: #666;
+   color:#FFF;
+}

@@ -60,7 +60,7 @@ public class ListaProductos extends HttpServlet {
                             + "<br><label name='nombre'>" + aux.getNombre() + "</label>"
                             + "<br><label name='precio'>" + aux.getPrecio() + "</label>"
                             + "<br><label name='Stock'>" + aux.getStock() + "</label>"
-                            + "<input name='cantidad' type='number' value='0' min='0' max='" + aux.getStock() + "'>"
+                            + "<input name='cantidad' type='number' value='0' min='1' max='" + aux.getStock() + "'>"
                             + "<br><button>Agregar</button>"
                             + "</div>"
                             + "</form>");
