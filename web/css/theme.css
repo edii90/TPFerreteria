@@ -13,7 +13,7 @@ form{
     display: none;
 }
 
-.TxtMsg{
+.TxtMsgError{
     
     color: red;
     width: 100%;
