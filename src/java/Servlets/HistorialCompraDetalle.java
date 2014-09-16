@@ -46,11 +46,11 @@ public class HistorialCompraDetalle extends HttpServlet {
         try {
             RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
             mw.include(request, response);
+            if (session.getAttribute("Mensaje") != null) {
+                out.println("<div class='txtmsgerror'>" + session.getAttribute("Mensaje") + "</div>");
+                session.removeAttribute("Mensaje");
+            }
             if (session.getAttribute("User") != null) {
-                if (session.getAttribute("Mensaje") != null) {
-                    out.println("<div class='txtmsgerror'>" + session.getAttribute("Mensaje") + "</div>");
-                    session.removeAttribute("Mensaje");
-                }
                 Hashtable ListaCompras;
                 if (session.getAttribute("ListadoDetalleCompras") == null) {
                     Dcompras dcom = new Dcompras();
