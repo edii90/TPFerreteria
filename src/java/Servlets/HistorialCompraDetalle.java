@@ -47,7 +47,7 @@ public class HistorialCompraDetalle extends HttpServlet {
             RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
             mw.include(request, response);
             if (session.getAttribute("Mensaje") != null) {
-                out.println("<div class='txtmsgerror'>" + session.getAttribute("Mensaje") + "</div>");
+                out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
                 session.removeAttribute("Mensaje");
             }
             if (session.getAttribute("User") != null) {

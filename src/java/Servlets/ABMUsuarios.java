@@ -50,7 +50,7 @@ public class ABMUsuarios extends HttpServlet {
             if (session.getAttribute("User") != null) {
                 if (((Usuarios) session.getAttribute("User")).getTipoUsr() == 1) {
                     if (session.getAttribute("Mensaje") != null) {
-                        out.println("<div class='txtmsgerror'>" + session.getAttribute("Mensaje") + "</div>");
+                        out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
                         session.removeAttribute("Mensaje");
                     }
                     Hashtable listaUsers;

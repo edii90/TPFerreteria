@@ -40,7 +40,7 @@ public class ConfirmarCompra extends HttpServlet {
 
             if (session.getAttribute("Mensaje") != null) {
                 out.println(
-                        "<div class='TxtMsg'>"
+                        "<div class='TxtMsgError'>"
                         + session.getAttribute("Mensaje")
                         + "</div>");
             } else {

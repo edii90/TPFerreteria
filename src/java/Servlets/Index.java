@@ -30,7 +30,7 @@ public class Index extends HttpServlet {
             Usuarios user = (Usuarios) session.getAttribute("User");
             
             if (session.getAttribute("Mensaje") != null) {
-                out.println(session.getAttribute("Mensaje"));
+                out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
                 session.removeAttribute("Mensaje");
             }
             if (user != null) {

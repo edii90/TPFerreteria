@@ -34,7 +34,7 @@ public class ListaProductos extends HttpServlet {
                 RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
                 mw.include(request, response);
                 if (session.getAttribute("Mensaje") != null) {
-                    out.println(session.getAttribute("Mensaje"));
+                out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
                     session.removeAttribute("Mensaje");
                 }
                 Dproductos Dpro = new Dproductos();

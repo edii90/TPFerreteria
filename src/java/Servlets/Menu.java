@@ -25,7 +25,7 @@ public class Menu extends HttpServlet {
                 mwc.include(request, response);
 
                 if(session.getAttribute("Mensaje") != null){
-                    out.println(session.getAttribute("Mensaje"));
+                out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
                 }else{
                     Usuarios user = (Usuarios)session.getAttribute("User");
                     out.println("<div class='contenedorCarrito'>");
