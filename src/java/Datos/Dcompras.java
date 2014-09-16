@@ -27,12 +27,11 @@ public class Dcompras extends coneccionBD {
         super();
     }
 
-    public Hashtable TraerTodasCabacerasCompras() throws Exception {     
-        
+    public Hashtable TraerTodasCabacerasCompras() throws Exception {
+
 //      Esta consulta esta mal. Deberia ser una sola consulta asi 
 //      "SELECT * FROM compras c inner join prodxcomp pc where c.idCompras=pc.idCompra" 
 //      pero no se como manejar los datos
-        
         try {
             super.conectar();
             Dusuarios dusr = new Dusuarios();
@@ -44,7 +43,7 @@ public class Dcompras extends coneccionBD {
 
             while (rows.next()) {
                 Usuarios usr = dusr.traerXid(rows.getInt("idUsuario"));
-                Compras aux = new Compras(rows.getInt("idCompras"),usr, rows.getDate("fecha"));
+                Compras aux = new Compras(rows.getInt("idCompras"), usr, rows.getDate("fecha"));
                 aux.setTotal(rows.getFloat("total"));
                 lista.put(aux.getId(), aux);
             }
@@ -55,22 +54,21 @@ public class Dcompras extends coneccionBD {
             super.desconectar();
         }
     }
-    
-    public Hashtable TraerLineasComprasPorIdCabecera(int idCabecera) throws Exception
-    {
-        try{
+
+    public Hashtable TraerLineasComprasPorIdCabecera(int idCabecera) throws Exception {
+        try {
             super.conectar();
             Hashtable aux = new Hashtable();
-                String sqlProd = "SELECT idLinea,idProd,nombre,precioUnit,cantidad FROM prodxcomp pc inner join productos p on p.idProductos=pc.idProd where idCompra =" + idCabecera + ";";
-                PreparedStatement psProd = Sentencia(sqlProd);
-                ResultSet rows = consulta(psProd);
+            String sqlProd = "SELECT idLinea,idProd,nombre,precioUnit,cantidad FROM prodxcomp pc inner join productos p on p.idProductos=pc.idProd where idCompra =" + idCabecera + ";";
+            PreparedStatement psProd = Sentencia(sqlProd);
+            ResultSet rows = consulta(psProd);
 
-                while (rows.next()) {
-                    //int idLin,int idProd,String nombre, float CostoUnit, int Cantidad
-                    LineaDeCompra pro = new LineaDeCompra(rows.getInt("idLinea"), rows.getInt("idProd"), rows.getString("nombre"), rows.getFloat("precioUnit"),rows.getInt("cantidad"));
-                    aux.put(pro.getIdLinea(), pro);
-                }
-                return aux;
+            while (rows.next()) {
+                //int idLin,int idProd,String nombre, float CostoUnit, int Cantidad
+                LineaDeCompra pro = new LineaDeCompra(rows.getInt("idLinea"), rows.getInt("idProd"), rows.getString("nombre"), rows.getFloat("precioUnit"), rows.getInt("cantidad"));
+                aux.put(pro.getIdLinea(), pro);
+            }
+            return aux;
         } catch (SQLException ex) {
             throw new SQLException("Error en traer todas las lineas de compras por cabecera de Compra " + ex.getMessage());
         } finally {
@@ -89,10 +87,10 @@ public class Dcompras extends coneccionBD {
             ResultSet rows = consulta(ps);
 
             while (rows.next()) {
-                Compras aux = new Compras(rows.getInt("idCompras"),user, rows.getDate("fecha"));
+                Compras aux = new Compras(rows.getInt("idCompras"), user, rows.getDate("fecha"));
                 aux.setTotal(rows.getFloat("total"));
                 lista.put(aux.getId(), aux);
-                }
+            }
             return lista;
         } catch (SQLException ex) {
             throw new SQLException("Error en traer todas las Compras por usuario " + ex.getMessage());
@@ -102,73 +100,33 @@ public class Dcompras extends coneccionBD {
     }
 
     public void CrearCompra(Compras comp) throws Exception {
-        
-        String sql = "";
-        
+String sql="";
         try {
             super.conectar();
-            
-            sql = "delimiter // start transaction;";
 
+            /*delimiter // 
+             start transaction; //
+             INSERT INTO Compras (idUsuario,total) values('1','6000.0'); //
+             INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values((SELECT MAX(idCompras) FROM compras),'11','500','12.0'); //
+             commit; //*/
             //Inserta la cabecera de la compra
-            sql += "INSERT INTO Compras (idUsuario,total) values('"
-                    + comp.getUsr().getId() + "','"
-                    + comp.getTotal() + "'); //";
-
+            sql = "delimiter // start transaction; // ";
+            sql += "INSERT INTO compras (idUsuario,total) values(" + comp.getUsr().getId() + "," + comp.getTotal() + "); // ";
             //Recorre la lista de productos e Inserta la lista en la tabla relacinal productos X compra
             Enumeration e = comp.getLista().elements();
             LineaDeCompra aux;
             while (e.hasMoreElements()) {
+
                 aux = (LineaDeCompra) e.nextElement();
-
-                sql += "INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values("
-                        + "(SELECT MAX(idCompras)+1 FROM compras),'"
-                        + aux.getId()+ "','"
-                        + aux.getCantidad() + "','"
-                        + aux.getCostoUnit()
-                        + "'); //";
+                sql +=" UPDATE `productos` SET `stock`=stock - " + aux.getCantidad() + " WHERE `idProductos`=" + aux.getId() + "; // ";
+                sql +=" INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values((SELECT MAX(idCompras) FROM compras)," + aux.getId() + "," + aux.getCantidad() + "," + aux.getCostoUnit() + "); // ";
             }
-            sql += "commit";
+            sql +="commit; // ";
             PreparedStatement psProd = Sentencia(sql);
-            consulta(psProd);
-        } catch (SQLException ex) {
-            throw new SQLException("Error en crear la Compras " + ex.getMessage()+"       ***    "+sql);
-        } finally {
-            super.desconectar();
-        }
-    }
+            consultalimpia(psProd);
 
-    public void EliminarCompra(Compras comp) throws Exception {
-        try {
-            super.conectar();
-            String sql = "start transaction;"
-                    + "DELETE FROM `prodxcomp` WHERE `idCompra`='"
-                    + comp.getId() + "';"
-                    + "delete from compras where idCompras ='"
-                    + comp.getId() + "';"
-                    + "commit;";
-            PreparedStatement ps = Sentencia(sql);
-            consulta(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error en eliminar la compra " + ex.getMessage());
-        } finally {
-            super.desconectar();
-        }
-    }
-
-    public void EliminarCompra(int id) throws Exception {
-        try {
-            super.conectar();
-            String sql = "start transaction;"
-                    + "DELETE FROM `prodxcomp` WHERE `idCompra`='"
-                    + id + "';"
-                    + "delete from compras where idCompras ='"
-                    + id + "';"
-                    + "commit;";
-            PreparedStatement ps = Sentencia(sql);
-            consulta(ps);
-        } catch (SQLException ex) {
-            throw new SQLException("Error en eliminar la compra por id " + ex.getMessage());
+            throw new SQLException("Error en crear la Compras " + ex.getMessage() + "       ***    "+sql);
         } finally {
             super.desconectar();
         }

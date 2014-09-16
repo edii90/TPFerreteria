@@ -83,6 +83,8 @@ public class HistorialCompraDetalle extends HttpServlet {
                             + "	<div class='celdaHistorial'>$ " + aux.getCostoUnit() * aux.getCantidad() + "</div>"
                             + "</div>");
                 }
+                        out.println("<form action='HistoriaCompra' method='post'>"
+                                + "<button>Volver</button></form>");
             }
 
             RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");

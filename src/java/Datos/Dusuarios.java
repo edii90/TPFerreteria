@@ -34,7 +34,7 @@ public class Dusuarios extends coneccionBD {
             }
             return lista;
         } catch (SQLException ex) {
-            throw new SQLException("Error en traer todos los usuarios Usuario" + ex.getMessage());
+            throw new SQLException("Error en traer todos los usuarios Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -52,7 +52,7 @@ public class Dusuarios extends coneccionBD {
             }
             return usr;
         } catch (SQLException ex) {
-            throw new SQLException("Error en el login Usuario" + ex.getMessage());
+            throw new SQLException("Error en el login Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -70,7 +70,7 @@ public class Dusuarios extends coneccionBD {
             }
             return 0;
         } catch (SQLException ex) {
-            throw new SQLException("Error en el login Usuario" + ex.getMessage());
+            throw new SQLException("Error en el login Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -88,7 +88,7 @@ public class Dusuarios extends coneccionBD {
             }
             return usr;
         } catch (SQLException ex) {
-            throw new SQLException("Error al traer por id Usuario" + ex.getMessage());
+            throw new SQLException("Error al traer por id Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -115,7 +115,7 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             consultalimpia(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error al modificar Usuario" + ex.getMessage());
+            throw new SQLException("Error al modificar Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -129,7 +129,7 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             consultalimpia(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error al crear Usuario" + ex.getMessage());
+            throw new SQLException("Error al crear Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -144,7 +144,7 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             consultalimpia(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error al eliminar Usuario" + ex.getMessage());
+            throw new SQLException("Error al eliminar Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }
@@ -158,7 +158,7 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             consultalimpia(ps);
         } catch (SQLException ex) {
-            throw new SQLException("Error al eliminar Usuario" + ex.getMessage());
+            throw new SQLException("Error al eliminar Usuario " + ex.getMessage());
         } finally {
             super.desconectar();
         }

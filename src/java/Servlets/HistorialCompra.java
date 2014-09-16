@@ -104,7 +104,7 @@ public class HistorialCompra extends HttpServlet {
             mwc.include(request, response);
 
         } catch (Exception ex) {
-            session.setAttribute("Mensaje", "Error in catch " + ex);
+            session.setAttribute("Mensaje", "Error in catch " + ex.getMessage());
         } finally {
             out.close();
         }

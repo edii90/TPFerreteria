@@ -33,7 +33,7 @@ public class coneccionBD {
             setConexion(DriverManager.getConnection(getStrCon(),"root",""));
         } catch (SQLException e)
         {
-            throw new Exception("Error en la conexion");
+            throw new Exception("Error en la conexion "+e.getMessage());
         }
     }
     public void desconectar()
@@ -54,8 +54,7 @@ public class coneccionBD {
             return ps;
         } catch (SQLException e)
         {
-            this.desconectar();
-            throw new SQLException("Error al ejecutar sentencia");
+            throw new SQLException("Error al ejecutar sentencia "+e.getMessage());
         }
     }
     public ResultSet consulta(PreparedStatement sentencia) throws Exception
@@ -66,7 +65,7 @@ public class coneccionBD {
             return filas;
         } catch (SQLException e)
         {
-            throw new SQLException("Error al ejecutar consulta");
+            throw new SQLException("Error al ejecutar consulta "+e.getMessage());
         }
     }
     public void consultalimpia(PreparedStatement sentencia) throws Exception
@@ -77,7 +76,7 @@ public class coneccionBD {
 
         } catch (SQLException e)
         {
-            throw new SQLException("Error al ejecutar consulta");
+            throw new SQLException("Error al ejecutar consulta limpia "+e.getMessage());
         }
     }
     

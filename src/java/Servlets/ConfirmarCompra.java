@@ -114,6 +114,7 @@ public class ConfirmarCompra extends HttpServlet {
                         Compras NuevaCompra = (Compras)session.getAttribute("nuevaCompra");
                         Dcompras daoCompras = new Dcompras();
                         daoCompras.CrearCompra(NuevaCompra);
+                        session.removeAttribute("Carrito");
                         response.sendRedirect("Index");
                     }else{
                         processRequest(request, response);
@@ -127,7 +128,7 @@ public class ConfirmarCompra extends HttpServlet {
                 response.sendRedirect("Index");
             }
         } catch (Exception ex) {
-            session.setAttribute("Mensaje", "Error en catch " + ex);
+            session.setAttribute("Mensaje", "Error en catch " + ex.getMessage());
             response.sendRedirect("Index");
         }
     }
