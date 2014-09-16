@@ -6,9 +6,11 @@
 package Servlets;
 
 import Modelo.Compras;
+import Modelo.LineaDeCompra;
 import Modelo.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,81 +27,93 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ConfirmarCompra", urlPatterns = {"/ConfirmarCompra"})
 public class ConfirmarCompra extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
+
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
-        Usuarios User;
-        Hashtable ListadoCompra = new Hashtable();
+
         try {
-            if (session.getAttribute("User") != null) {
-                RequestDispatcher mwc = request.getRequestDispatcher("MarcoWeb");
-                mwc.include(request, response);
-                User = (Usuarios) session.getAttribute("User");
-                if (session.getAttribute("Mensaje") != null) {
-                    out.println(session.getAttribute("Mensaje"));
-                } else {
-                    //Compras nuevaCompra = new Compras(User,)
-                    out.println("Usuario: " + User.getApellido() + ", " + User.getNombre() + "\n");
-                    ListadoCompra = (Hashtable) session.getAttribute("Carrito");
+            RequestDispatcher mwc = request.getRequestDispatcher("MarcoWeb");
+            mwc.include(request, response);
 
-                }
-
-                RequestDispatcher mwp = request.getRequestDispatcher("MarcoWebPie");
-                mwp.include(request, response);
+            if (session.getAttribute("Mensaje") != null) {
+                out.println(
+                        "<div class='TxtMsg'>"
+                        + session.getAttribute("Mensaje")
+                        + "</div>");
             } else {
-                session.setAttribute("Mensaje", "Usted no esta logeado.");
-                response.sendRedirect("Index");
+
+                Usuarios User = (Usuarios) session.getAttribute("User");
+                Hashtable ListadoCompra = (Hashtable) session.getAttribute("Carrito");
+
+                Compras nuevaCompra = new Compras(User, ListadoCompra);
+
+                Enumeration e = ListadoCompra.elements();
+                e = ListadoCompra.elements();
+                LineaDeCompra aux;
+
+                out.println("Usuario: " + nuevaCompra.getUsr().getNombre() + ", " + nuevaCompra.getUsr().getApellido() + "\n"
+                        + "<div>");
+
+                while (e.hasMoreElements()) {
+                    aux = (LineaDeCompra) e.nextElement();
+                    out.println(
+                            "<div>"
+                            + "<tr>"
+                            + "<td>"
+                            + " X" + aux.getCantidad()
+                            + "</td>"
+                            + "<td style='text-center: right;'>"
+                            + aux.getNombre()
+                            + "</td>"
+                            + "<td style='text-align: right;'>"
+                            + aux.getCostoUnit() + " $"
+                            + "</td>"
+                            + "</tr>"
+                            + "</div>");
+                }
+                out.println("</div>\n"
+                        + "\nTotal: " + nuevaCompra.calcularTotal()
+                        + "\n<button>Confirmar</button>");
             }
+
+            RequestDispatcher mwp = request.getRequestDispatcher("MarcoWebPie");
+            mwp.include(request, response);
+
         } finally {
             out.close();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession(true);
+
+        try {
+            if (session.getAttribute("User") != null) {
+                if (session.getAttribute("Carrito") != null) {
+                    processRequest(request, response);
+                } else {
+                    session.setAttribute("Mensaje", "Carrito vacio");
+                }
+            } else {
+                session.setAttribute("Mensaje", "Usted no esta logeado.");
+                response.sendRedirect("Index");
+            }
+        } catch (Exception ex) {
+            session.setAttribute("Mensaje", "Error in catch " + ex);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
