@@ -7,6 +7,7 @@ package Servlets;
 
 import Datos.Dcompras;
 import Modelo.Compras;
+import Modelo.Usuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -38,24 +39,34 @@ public class HistorialCompra extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(true);
-        
+
         try {
             RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
             mw.include(request, response);
-            
+
             if (session.getAttribute("Mensaje") != null) {
                 out.println("<div class='txtmsgerror'>" + session.getAttribute("Mensaje") + "</div>");
                 session.removeAttribute("Mensaje");
             }
+            
             Hashtable ListaCompras;
+            
             if (session.getAttribute("ListadoCompras") == null) {
-                Dcompras dcom = new Dcompras();
-                ListaCompras = dcom.TraerTodasCabacerasCompras();
-                session.setAttribute("ListadoCompras", ListaCompras);
+
+                if (((Usuarios) session.getAttribute("User")).getTipoUsr() == 1) {
+                    Dcompras dcom = new Dcompras();
+                    ListaCompras = dcom.TraerTodasCabacerasCompras();
+                    session.setAttribute("ListadoCompras", ListaCompras);
+                }else{
+                    
+                    Dcompras dcom = new Dcompras();
+                    ListaCompras = dcom.TraerComprasXusr((Usuarios) session.getAttribute("User"));
+                    session.setAttribute("ListadoCompras", ListaCompras);
+                }
             } else {
                 ListaCompras = (Hashtable) session.getAttribute("ListadoCompras");
             }
@@ -85,15 +96,17 @@ public class HistorialCompra extends HttpServlet {
                         + "	<div class='celdaHistorial'>$ " + aux.getTotal() + "</div>"
                         + "	<div class='celdaHistorial'><button class='botonVerHistorial'>ver</button></div>"
                         + "</div>");
+                formid++;
             }
             RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");
             mwc.include(request, response);
         } catch (Exception ex) {
-            session.setAttribute("Mensaje", "Error in catch" + ex);
+            session.setAttribute("Mensaje", "Error in catch " + ex);
         } finally {
             out.close();
         }
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
