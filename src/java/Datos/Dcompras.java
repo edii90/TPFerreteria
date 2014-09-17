@@ -39,7 +39,7 @@ public class Dcompras extends coneccionBD {
 
             String sql = "SELECT * FROM Compras;";
             PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = consulta(ps);
+            ResultSet rows = ConsultaConResultado(ps);
 
             while (rows.next()) {
                 Usuarios usr = dusr.traerXid(rows.getInt("idUsuario"));
@@ -61,7 +61,7 @@ public class Dcompras extends coneccionBD {
             Hashtable aux = new Hashtable();
             String sqlProd = "SELECT idLinea,idProd,nombre,precioUnit,cantidad FROM prodxcomp pc inner join productos p on p.idProductos=pc.idProd where idCompra =" + idCabecera + ";";
             PreparedStatement psProd = Sentencia(sqlProd);
-            ResultSet rows = consulta(psProd);
+            ResultSet rows = ConsultaConResultado(psProd);
 
             while (rows.next()) {
                 //int idLin,int idProd,String nombre, float CostoUnit, int Cantidad
@@ -79,12 +79,11 @@ public class Dcompras extends coneccionBD {
     public Hashtable TraerComprasXusr(Usuarios user) throws Exception {
         try {
             super.conectar();
-            Dusuarios dusr = new Dusuarios();
             Hashtable lista = new Hashtable();
 
             String sql = "SELECT * FROM Compras where idUsuario = '" + user.getId() + "';";
             PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = consulta(ps);
+            ResultSet rows = super.ConsultaConResultado(ps);
 
             while (rows.next()) {
                 Compras aux = new Compras(rows.getInt("idCompras"), user, rows.getDate("fecha"));
@@ -100,33 +99,24 @@ public class Dcompras extends coneccionBD {
     }
 
     public void CrearCompra(Compras comp) throws Exception {
-String sql="";
+        String sql="";
         try {
             super.conectar();
-
-            /*delimiter // 
-             start transaction; //
-             INSERT INTO Compras (idUsuario,total) values('1','6000.0'); //
-             INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values((SELECT MAX(idCompras) FROM compras),'11','500','12.0'); //
-             commit; //*/
-            //Inserta la cabecera de la compra
-            sql = "delimiter // start transaction; // ";
-            sql += "INSERT INTO compras (idUsuario,total) values(" + comp.getUsr().getId() + "," + comp.getTotal() + "); // ";
+            
+            sql += "INSERT INTO compras (idUsuario,total) values('" + comp.getUsr().getId() + "','" + comp.getTotal() + "'); ";
             //Recorre la lista de productos e Inserta la lista en la tabla relacinal productos X compra
             Enumeration e = comp.getLista().elements();
             LineaDeCompra aux;
             while (e.hasMoreElements()) {
 
                 aux = (LineaDeCompra) e.nextElement();
-                sql +=" UPDATE `productos` SET `stock`=stock - " + aux.getCantidad() + " WHERE `idProductos`=" + aux.getId() + "; // ";
-                sql +=" INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values((SELECT MAX(idCompras) FROM compras)," + aux.getId() + "," + aux.getCantidad() + "," + aux.getCostoUnit() + "); // ";
+                sql +=" INSERT INTO prodxcomp (idCompra,idProd,cantidad,precioUnit) values('(select max(idCompras) from compras)','" + aux.getId() + "','" + aux.getCantidad() + "','" + aux.getCostoUnit() + "'); ";
             }
-            sql +="commit; // ";
-            PreparedStatement psProd = Sentencia(sql);
-            consultalimpia(psProd);
+            PreparedStatement psCompras = Sentencia(sql);
+            super.ConsultaVariasLineasSinResultado(psCompras);
 
         } catch (SQLException ex) {
-            throw new SQLException("Error en crear la Compras " + ex.getMessage() + "       ***    "+sql);
+            throw new SQLException("Error en crear la Compras " + ex.getMessage() + " "+sql);
         } finally {
             super.desconectar();
         }

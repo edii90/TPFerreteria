@@ -57,7 +57,7 @@ public class coneccionBD {
             throw new SQLException("Error al ejecutar sentencia "+e.getMessage());
         }
     }
-    public ResultSet consulta(PreparedStatement sentencia) throws Exception
+    public ResultSet ConsultaConResultado(PreparedStatement sentencia) throws Exception
     {
         try
         {
@@ -68,12 +68,21 @@ public class coneccionBD {
             throw new SQLException("Error al ejecutar consulta "+e.getMessage());
         }
     }
-    public void consultalimpia(PreparedStatement sentencia) throws Exception
+    public void ConsultaSinResultado(PreparedStatement sentencia) throws Exception
     {
         try
         {
             sentencia.execute();
-
+        } catch (SQLException e)
+        {
+            throw new SQLException("Error al ejecutar consulta limpia "+e.getMessage());
+        }
+    }
+    public void ConsultaVariasLineasSinResultado(PreparedStatement sentencia) throws Exception
+    {
+        try
+        {
+            sentencia.executeBatch();
         } catch (SQLException e)
         {
             throw new SQLException("Error al ejecutar consulta limpia "+e.getMessage());

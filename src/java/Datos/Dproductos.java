@@ -28,7 +28,7 @@ public class Dproductos extends coneccionBD{
         Hashtable lista = new Hashtable();
             String sql = "SELECT * FROM productos;";
         PreparedStatement ps = Sentencia(sql);
-        ResultSet rows = consulta(ps);
+        ResultSet rows = ConsultaConResultado(ps);
         while (rows.next()){
             Productos aux = new Productos(rows.getInt("idProductos"),rows.getString("nombre"),rows.getFloat("precio"),rows.getInt("stock"));
             lista.put(aux.getId(), aux);
@@ -51,7 +51,7 @@ public class Dproductos extends coneccionBD{
                 + pro.getId()
                 + ";";
         PreparedStatement ps = Sentencia(sql);
-        consulta(ps);
+        ConsultaSinResultado(ps);
     }
     
     public void CrearProducto (String name,float precio,int stoc) throws Exception
@@ -60,7 +60,7 @@ public class Dproductos extends coneccionBD{
         String sql = "INSERT INTO `productos` (`nombre`, `precio`, `stock`) VALUES ('"
                 +name + "', '"+ precio + "', '" + stoc + "');";
         PreparedStatement ps = Sentencia(sql);
-        consulta(ps);
+        ConsultaSinResultado(ps);
     }
     
     public void EliminarProducto (Productos pro) throws Exception
@@ -69,7 +69,7 @@ public class Dproductos extends coneccionBD{
         String sql = "DELETE FROM `productos` WHERE `idProductos`='"
                 +pro.getId() + "';";
         PreparedStatement ps = Sentencia(sql);
-        consulta(ps);
+        ConsultaSinResultado(ps);
     }
     
     public void EliminarProducto (int id) throws Exception
@@ -77,7 +77,7 @@ public class Dproductos extends coneccionBD{
         String sql = "DELETE FROM `productos` WHERE `idProductos`='"
                 +id + "';";
         PreparedStatement ps = Sentencia(sql);
-        consulta(ps);
+        ConsultaSinResultado(ps);
     }
     
     public Hashtable TraerProductosPorTexto(String texto) throws Exception
@@ -86,7 +86,7 @@ public class Dproductos extends coneccionBD{
         String sql = "SELECT * FROM productos where nombre like '%"
                 + texto+ "%';";
         PreparedStatement ps = Sentencia(sql);
-        ResultSet rows = consulta(ps);
+        ResultSet rows = super.ConsultaConResultado(ps);
         while (rows.next()){
             Productos aux = new Productos(rows.getInt("idProductos"),rows.getString("nombre"),rows.getFloat("precio"),rows.getInt("stock"));
             lista.put(aux.getId(), aux);

@@ -20,7 +20,6 @@ public class MenuCarrito extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        Hashtable ListadoCompra = new Hashtable();
         HttpSession session = request.getSession(true);
         Cookie[] cookies = request.getCookies();
         int length = cookies.length;
@@ -33,8 +32,13 @@ public class MenuCarrito extends HttpServlet {
                     EstadoMenu = cookie.getValue();
                 }
             }
-
-            ListadoCompra = (Hashtable) session.getAttribute("Carrito");
+            Hashtable ListadoCompra;
+            if (session.getAttribute("Carrito") == null) {
+                session.setAttribute("Carrito", null);
+                ListadoCompra = null;
+            } else {
+                ListadoCompra = (Hashtable) session.getAttribute("Carrito");
+            }
             Enumeration e = ListadoCompra.elements();
             LineaDeCompra aux;
             float total = 0;
@@ -70,12 +74,12 @@ public class MenuCarrito extends HttpServlet {
 
             out.println(
                     "</table>"
-                    + "<form action='ConfirmarCompra' method='post'>"       
-                        + "<button class='btnCarrito'> COMPRAR </button>"
+                    + "<form action='ConfirmarCompra' method='post'>"
+                    + "<button class='btnCarrito'> COMPRAR </button>"
                     + "</form>"
                     + "</div>\n"
                     + "</div>\n");
-                    
+
         } finally {
             out.close();
         }
