@@ -27,7 +27,7 @@ public class Dusuarios extends coneccionBD {
             Hashtable lista = new Hashtable();
             String sql = "SELECT * FROM usuarios;";
             PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = consulta(ps);
+            ResultSet rows = ConsultaConResultado(ps);
             while (rows.next()) {
                 Usuarios aux = new Usuarios(rows.getInt("idUsr"), rows.getString("usuario"), rows.getString("pass"), rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
                 lista.put(aux.getId(), aux);
@@ -46,7 +46,7 @@ public class Dusuarios extends coneccionBD {
             Usuarios usr = null;
             String sql = "SELECT * FROM usuarios WHERE usuario='" + usuario + "' AND pass='" + pass + "'";
             PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = consulta(ps);
+            ResultSet rows = ConsultaConResultado(ps);
             if (rows.next()) {
                 return usr = new Usuarios(rows.getInt("idUsr"),usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
             }
@@ -64,7 +64,7 @@ public class Dusuarios extends coneccionBD {
             super.conectar();
             String sql = "SELECT * FROM usuarios WHERE usuario='" + usuario + "' AND pass='" + pass + "'";
             PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = consulta(ps);
+            ResultSet rows = ConsultaConResultado(ps);
             if (rows.next()) {
                 return rows.getInt("idUsr");
             }
@@ -82,7 +82,7 @@ public class Dusuarios extends coneccionBD {
             Usuarios usr = null;
             String sql = "SELECT * FROM usuarios WHERE idUsr='" + id + "'";
             PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = consulta(ps);
+            ResultSet rows = ConsultaConResultado(ps);
             if (rows.next()) {
                 return usr = new Usuarios(rows.getString("usuario"), rows.getString("pass"), rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
             }
@@ -113,7 +113,7 @@ public class Dusuarios extends coneccionBD {
                     + usr.getId()
                     + ";";
             PreparedStatement ps = Sentencia(sql);
-            consultalimpia(ps);
+            ConsultaSinResultado(ps);
         } catch (SQLException ex) {
             throw new SQLException("Error al modificar Usuario " + ex.getMessage());
         } finally {
@@ -127,7 +127,7 @@ public class Dusuarios extends coneccionBD {
             String sql = "INSERT INTO `usuarios` (`usuario`, `pass`, `DNI`, `nombre`, `apellido`) VALUES ('"
                     + usr + "', '" + pass + "', '" + doc + "', '" + name + "', '" + ape + "');";
             PreparedStatement ps = Sentencia(sql);
-            consultalimpia(ps);
+            ConsultaSinResultado(ps);
         } catch (SQLException ex) {
             throw new SQLException("Error al crear Usuario " + ex.getMessage());
         } finally {
@@ -142,7 +142,7 @@ public class Dusuarios extends coneccionBD {
             String sql = "DELETE FROM `usuarios` WHERE `idUsr`='"
                     + id.getId() + "';";
             PreparedStatement ps = Sentencia(sql);
-            consultalimpia(ps);
+            ConsultaSinResultado(ps);
         } catch (SQLException ex) {
             throw new SQLException("Error al eliminar Usuario " + ex.getMessage());
         } finally {
@@ -156,7 +156,7 @@ public class Dusuarios extends coneccionBD {
             String sql = "DELETE FROM `usuarios` WHERE `idUsr`='"
                     + id + "';";
             PreparedStatement ps = Sentencia(sql);
-            consultalimpia(ps);
+            ConsultaSinResultado(ps);
         } catch (SQLException ex) {
             throw new SQLException("Error al eliminar Usuario " + ex.getMessage());
         } finally {
