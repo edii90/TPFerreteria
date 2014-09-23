@@ -18,6 +18,7 @@ public class Usuarios {
     private String nombre;
     private String apellido;
     private int tipoUsr;
+    private boolean estado;
     
     public String getUsuario() {
         return usuario;
@@ -74,6 +75,17 @@ public class Usuarios {
         nombre = nomb;
         apellido = ape;
         tipoUsr = tipo;
+    }  
+    public Usuarios(int id,String usr,String pass,int doc,String nomb,String ape,int tipo,boolean estado)
+    {
+        this.id = id;
+        this.estado = estado;
+        usuario = usr;
+        contrasenia = pass;
+        DNI = doc;
+        nombre = nomb;
+        apellido = ape;
+        tipoUsr = tipo;
     }
 
     /**
@@ -88,5 +100,19 @@ public class Usuarios {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the estado
+     */
+    public boolean isEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

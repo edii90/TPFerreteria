@@ -78,7 +78,8 @@ public class ABMUsuariosEditar extends HttpServlet {
                             + "</div>"
                             + "<div class='contenedor'>"
                             + "	<div class='etiqueta'><label name='tipo'>Tipo de Usuario: </label></div>"
-                            + "	<div class='campo'><input class='InputABM' type='text' name ='TipoUsr' value='" + user.getTipoUsr() + "' /></div>"
+                            + "	<div class='campo'><input class='InputABM' type='text' name ='tipo' value='" + user.getTipoUsr() + "' /></div>"
+                            + "<div class='etiqueta'></div><div class='campo'>\"1\" para administrador \"2\" para Usuario</div>"
                             + "</div>"
                             + "	<div class='DivBoton'><button name='Guardar' class='botonABM'>Guardar</button></div>");
                     if (user.getId() != 0) {
@@ -154,7 +155,7 @@ public class ABMUsuariosEditar extends HttpServlet {
                 String apellido = (request.getParameter("Apellido"));
                 String pass = (request.getParameter("Pass"));
                 String usr = (request.getParameter("Usuario"));
-                int tipo = Integer.parseInt(request.getParameter("TipoUsr"));
+                int tipo = Integer.parseInt(request.getParameter("tipo"));
                 int doc = Integer.parseInt(request.getParameter("DNI"));
 
                 if (id != 0) {

@@ -65,7 +65,7 @@ public class coneccionBD {
             return filas;
         } catch (SQLException e)
         {
-            throw new SQLException("Error al ejecutar consulta "+e.getMessage());
+            throw new SQLException("Error al ejecutar consulta con resultado "+e.getMessage());
         }
     }
     public void ConsultaSinResultado(PreparedStatement sentencia) throws Exception
@@ -75,17 +75,7 @@ public class coneccionBD {
             sentencia.execute();
         } catch (SQLException e)
         {
-            throw new SQLException("Error al ejecutar consulta limpia "+e.getMessage());
-        }
-    }
-    public void ConsultaVariasLineasSinResultado(PreparedStatement sentencia) throws Exception
-    {
-        try
-        {
-            sentencia.executeBatch();
-        } catch (SQLException e)
-        {
-            throw new SQLException("Error al ejecutar consulta limpia "+e.getMessage());
+            throw new SQLException("Error al ejecutar consulta sin resultado "+e.getMessage());
         }
     }
     

@@ -51,14 +51,8 @@ public class HistorialCompraDetalle extends HttpServlet {
                 session.removeAttribute("Mensaje");
             }
             if (session.getAttribute("User") != null) {
-                Hashtable ListaCompras;
-                if (session.getAttribute("ListadoDetalleCompras") == null) {
-                    Dcompras dcom = new Dcompras();
-                    ListaCompras = dcom.TraerLineasComprasPorIdCabecera((Integer) session.getAttribute("idCabecera"));
-                    session.setAttribute("ListadoDetalleCompras", ListaCompras);
-                } else {
-                    ListaCompras = (Hashtable) session.getAttribute("ListadoDetalleCompras");
-                }
+                Dcompras dcom = new Dcompras();
+                Hashtable ListaCompras = dcom.TraerLineasComprasPorIdCabecera((Integer) session.getAttribute("idCabecera"));
 
                 Enumeration e = ListaCompras.elements();
                 LineaDeCompra aux;
@@ -75,7 +69,7 @@ public class HistorialCompraDetalle extends HttpServlet {
                 while (e.hasMoreElements()) {
                     aux = (LineaDeCompra) e.nextElement();
                     out.println("<div class='filaHistorial'>"
-                            + "    <input type='text' class='InputId' name='id' value='" + aux.getId() + "'>"
+                            + " <input type='text' class='InputId' name='id' value='" + aux.getId() + "'>"
                             + "	<div class='celdaHistorial'>" + aux.getId() + "</div>"
                             + "	<div class='celdaHistorial'>" + aux.getNombre() + "</div>"
                             + "	<div class='celdaHistorial'>" + aux.getCantidad() + "</div>"
@@ -83,8 +77,7 @@ public class HistorialCompraDetalle extends HttpServlet {
                             + "	<div class='celdaHistorial'>$ " + aux.getCostoUnit() * aux.getCantidad() + "</div>"
                             + "</div>");
                 }
-                        out.println("<form action='HistoriaCompra' method='post'>"
-                                + "<button>Volver</button></form>");
+                out.println("<form action='HistoriaCompra' method='post'><button>Volver</button></form>");
             }
 
             RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");

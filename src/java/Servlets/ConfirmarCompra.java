@@ -115,6 +115,7 @@ public class ConfirmarCompra extends HttpServlet {
                         Dcompras daoCompras = new Dcompras();
                         daoCompras.CrearCompra(NuevaCompra);
                         session.removeAttribute("Carrito");
+                        session.removeAttribute("ListadoCompras");
                         response.sendRedirect("Index");
                     }else{
                         processRequest(request, response);

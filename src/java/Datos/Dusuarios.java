@@ -29,8 +29,10 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             ResultSet rows = ConsultaConResultado(ps);
             while (rows.next()) {
-                Usuarios aux = new Usuarios(rows.getInt("idUsr"), rows.getString("usuario"), rows.getString("pass"), rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
-                lista.put(aux.getId(), aux);
+                if (rows.getBoolean("estado") == true) {
+                    Usuarios aux = new Usuarios(rows.getInt("idUsr"), rows.getString("usuario"), rows.getString("pass"), rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
+                    lista.put(aux.getId(), aux);
+                }
             }
             return lista;
         } catch (SQLException ex) {
@@ -48,27 +50,14 @@ public class Dusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             ResultSet rows = ConsultaConResultado(ps);
             if (rows.next()) {
-                return usr = new Usuarios(rows.getInt("idUsr"),usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
+                usr = new Usuarios(rows.getInt("idUsr"), usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"),rows.getBoolean("estado"));
+            }
+            if(usr.isEstado()==false)
+            {
+                PreparedStatement activarUsr = Sentencia("UPDATE `usuarios` SET `estado`=1 WHERE `idUsr`='"+usr.getId()+"';");
+                ConsultaSinResultado(activarUsr);
             }
             return usr;
-        } catch (SQLException ex) {
-            throw new SQLException("Error en el login Usuario " + ex.getMessage());
-        } finally {
-            super.desconectar();
-        }
-    }
-
-    public int loginId(String usuario, String pass) throws Exception {
-
-        try {
-            super.conectar();
-            String sql = "SELECT * FROM usuarios WHERE usuario='" + usuario + "' AND pass='" + pass + "'";
-            PreparedStatement ps = Sentencia(sql);
-            ResultSet rows = ConsultaConResultado(ps);
-            if (rows.next()) {
-                return rows.getInt("idUsr");
-            }
-            return 0;
         } catch (SQLException ex) {
             throw new SQLException("Error en el login Usuario " + ex.getMessage());
         } finally {
@@ -109,9 +98,9 @@ public class Dusuarios extends coneccionBD {
                     + usr.getApellido()
                     + "', tipo="
                     + usr.getTipoUsr()
-                    + " WHERE idUsr="
+                    + " WHERE idUsr='"
                     + usr.getId()
-                    + ";";
+                    + "';";
             PreparedStatement ps = Sentencia(sql);
             ConsultaSinResultado(ps);
         } catch (SQLException ex) {
@@ -139,7 +128,7 @@ public class Dusuarios extends coneccionBD {
     public void EliminarUsr(Usuarios id) throws Exception {
         try {
             super.conectar();
-            String sql = "DELETE FROM `usuarios` WHERE `idUsr`='"
+            String sql = "UPDATE `usuarios` SET `estado`=0 WHERE `idUsr`='"
                     + id.getId() + "';";
             PreparedStatement ps = Sentencia(sql);
             ConsultaSinResultado(ps);
@@ -153,7 +142,7 @@ public class Dusuarios extends coneccionBD {
     public void EliminarUsr(int id) throws Exception {
         try {
             super.conectar();
-            String sql = "DELETE FROM `usuarios` WHERE `idUsr`='"
+            String sql = "UPDATE `usuarios` SET `estado`=0 WHERE `idUsr`='"
                     + id + "';";
             PreparedStatement ps = Sentencia(sql);
             ConsultaSinResultado(ps);

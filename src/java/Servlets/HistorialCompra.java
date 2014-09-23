@@ -75,7 +75,7 @@ public class HistorialCompra extends HttpServlet {
                 Enumeration e = ListaCompras.elements();
                 Compras aux;
 
-                out.println("<<div class='tablaHistorial'>\n"
+                out.println("<div class='tablaHistorial'>\n"
                         + "<div class='filaHistorialCabecera'>\n"
                         + "	<div class='celdaCabeceraHistorial'>Usuario</div>\n"
                         + "	<div class='celdaCabeceraHistorial'>N° Pedido</div>\n"
@@ -96,7 +96,7 @@ public class HistorialCompra extends HttpServlet {
                             + "	<div class='celdaHistorial'>" + aux.getFecha() + "</div>"
                             + "	<div class='celdaHistorial'>$ " + aux.getTotal() + "</div>"
                             + "	<div class='celdaHistorial'><button class='botonVerHistorial'>ver</button></div>"
-                            + "</div>");
+                            + "</div></form>");
                     formid++;
                 }
             }

@@ -34,7 +34,7 @@ public class ListaProductos extends HttpServlet {
                 RequestDispatcher mw = request.getRequestDispatcher("MarcoWeb");
                 mw.include(request, response);
                 if (session.getAttribute("Mensaje") != null) {
-                out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
+                    out.println("<div class='TxtMsgError'>" + session.getAttribute("Mensaje") + "</div>");
                     session.removeAttribute("Mensaje");
                 }
                 Dproductos Dpro = new Dproductos();
@@ -51,20 +51,22 @@ public class ListaProductos extends HttpServlet {
                 int formid = 1;
                 while (e.hasMoreElements()) {
                     aux = (Productos) e.nextElement();
-                    String FormName = "Producto" + formid;
+                    if (aux.getStock() != 0) {
+                        String FormName = "Producto" + formid;
 
-                    out.println(
-                            "<form name='" + FormName + "' action='ListaProductos' method='post'>"
-                            + "<div class='DivProductos'>"
-                            + "<br><input type='text' name='id' class='InputId' value='" + aux.getId() + "'>"
-                            + "<br><label name='nombre'>" + aux.getNombre() + "</label>"
-                            + "<br><label name='precio'>" + aux.getPrecio() + "</label>"
-                            + "<br><label name='Stock'>" + aux.getStock() + "</label>"
-                            + "<input name='cantidad' type='number' value='0' min='1' max='" + aux.getStock() + "'>"
-                            + "<br><button>Agregar</button>"
-                            + "</div>"
-                            + "</form>");
-                    formid++;
+                        out.println(
+                                "<form name='" + FormName + "' action='ListaProductos' method='post'>"
+                                + "<div class='DivProductos'>"
+                                + "<br><input type='text' name='id' class='InputId' value='" + aux.getId() + "'>"
+                                + "<br><label name='nombre'>" + aux.getNombre() + "</label>"
+                                + "<br><label name='precio'>" + aux.getPrecio() + "</label>"
+                                + "<br><label name='Stock'>" + aux.getStock() + "</label>"
+                                + "<input name='cantidad' type='number' value='0' min='1' max='" + aux.getStock() + "'>"
+                                + "<br><button>Agregar</button>"
+                                + "</div>"
+                                + "</form>");
+                        formid++;
+                    }
                 }
                 out.println("</div>");
                 RequestDispatcher mwc = request.getRequestDispatcher("MarcoWebPie");
@@ -112,8 +114,8 @@ public class ListaProductos extends HttpServlet {
                 int cantProd = Integer.parseInt(request.getParameter("cantidad"));
                 Productos Prod = new Productos();
                 Prod = (Productos) ListaProductos.get(idProd);
-                LineaDeCompra LineaCompra = new LineaDeCompra(Prod.getId(),Prod.getNombre(),Prod.getPrecio(),cantProd);
-                if(Prod.getStock() >= LineaCompra.getCantidad()){
+                LineaDeCompra LineaCompra = new LineaDeCompra(Prod.getId(), Prod.getNombre(), Prod.getPrecio(), cantProd);
+                if (Prod.getStock() >= LineaCompra.getCantidad()) {
                     if (ListaCarrito.get(Prod.getId()) != null) {
                         LineaDeCompra aux = new LineaDeCompra();
                         aux = (LineaDeCompra) ListaCarrito.get(Prod.getId());

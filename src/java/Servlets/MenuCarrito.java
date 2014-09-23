@@ -33,6 +33,7 @@ public class MenuCarrito extends HttpServlet {
                 }
             }
             Hashtable ListadoCompra;
+            
             if (session.getAttribute("Carrito") == null) {
                 session.setAttribute("Carrito", null);
                 ListadoCompra = null;
